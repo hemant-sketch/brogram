@@ -1,6 +1,8 @@
 import Layout from "./components/Layout.jsx";
 import Grid from "./components/Grid.jsx";
-import {useState} from 'react'
+import Hero from "./components/Hero.jsx";
+import {useState} from 'react';
+import './fanta.css';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -9,6 +11,7 @@ function App() {
     <>
     <Layout>
       <main>
+        <Hero/>
         <Grid/>
       </main>
     </Layout>
