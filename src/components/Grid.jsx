@@ -9,7 +9,7 @@ export default function Grid() {
         const entry = savedWorkouts[val];
         return entry.isComplete;
     });
-    let isLocked = false;
+
     
 
     function handleSave(index, data) {
@@ -22,6 +22,7 @@ export default function Grid() {
         }
         setSavedWorkouts(newObj);
         localStorage.setItem('irondays', JSON.stringify(newObj));
+        setSelectedWorkout("null");
     }
 
     function handleComplete(index, data) {
@@ -44,11 +45,12 @@ export default function Grid() {
     return ( 
         <div className="training-plan-grid">
             {Object.keys(training_plan).map((workout, workoutIndex) => {
-                const isLocked = workoutIndex % 3 ===0 ?
+                const isLocked = workoutIndex === 0 ?
                 false :
-                completedWorkouts.includes('${workoutIndex - 1}');
+                !completedWorkouts.includes(`${workoutIndex - 1}`);
+                console.log(workoutIndex, isLocked);
+
                 const type = workoutIndex % 3 === 0 ? "Push" : workoutIndex % 3 === 1 ? "Pull" : "Legs";
-                 
                 const trainingPlan = training_plan[workoutIndex];  //trainingPlan for that particular day
                 const dayNum = ((workoutIndex /8 ) <= 1) ? '0' + (workoutIndex + 1) : workoutIndex + 1;
                 const icon = workoutIndex % 3 === 0 ? (
@@ -77,6 +79,7 @@ export default function Grid() {
                 }
                 return (
                     <button onClick={() => {
+                        if(isLocked) {return};
                         setSelectedWorkout(workoutIndex);
                         }}
                         
